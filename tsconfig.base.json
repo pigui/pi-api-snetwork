@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/backend/shared/util/date": [
+        "libs/backend/shared/util/date/src/index.ts"
+      ],
+      "@app/backend/shared/util/generate-id": [
+        "libs/backend/shared/util/generate-id/src/index.ts"
+      ],
+      "@app/backend/shared/util/hashing": [
+        "libs/backend/shared/util/hashing/src/index.ts"
+      ],
+      "@app/shared/entities": ["libs/shared/entities/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

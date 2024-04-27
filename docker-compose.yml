@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - APP_NAME=gateway
+    ports:
+      - 3000:3000
+    restart: always
+    depends_on:
+      - nats
+  users-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - APP_NAME=users-service
+    restart: always
+    environment:
+      - DATABASE_URL=mongodb://users-db
+      - DATABASE_PORT=27017
+      - NATS_URL=nats://nats:4222
+    deploy:
+      replicas: 3
+    depends_on:
+      - nats
+      - users-db
+  users-db:
+    image: mongo:5.0.26
+    restart: always
+    ports:
+      - 27017:27017
+  nats:
+    image: nats:alpine
+    ports:
+      - 4222:4222
+      - 6222:6222
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
