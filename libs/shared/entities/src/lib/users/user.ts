@@ -1,4 +1,4 @@
-export class User {
+export abstract class User {
   constructor(
     public id: string,
     public email: string,

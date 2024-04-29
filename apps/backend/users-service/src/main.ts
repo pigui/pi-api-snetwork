@@ -3,7 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
@@ -17,9 +17,12 @@ async function bootstrap() {
       transport: Transport.NATS,
       options: {
         servers: configurations().natsUrl,
+        queue: 'users_service',
       },
     }
   );
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen();
   Logger.log(`🚀 Users Service`);

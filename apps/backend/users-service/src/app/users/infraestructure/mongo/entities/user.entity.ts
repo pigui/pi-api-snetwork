@@ -1,17 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as moongose from 'mongoose';
-import { UUID } from 'mongodb';
 
 export type UserDocument = moongose.HydratedDocument<UserEntity>;
 
 @Schema()
 export class UserEntity {
-  @Prop({
-    type: moongose.Schema.Types.UUID,
-    default: new UUID(),
-  })
-  _id: UUID;
+  @Prop({ type: moongose.SchemaTypes.ObjectId })
+  _id: moongose.Types.ObjectId;
 
   @Prop({ unique: true })
   email: string;

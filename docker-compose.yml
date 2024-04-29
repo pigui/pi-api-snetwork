@@ -10,8 +10,13 @@ services:
     ports:
       - 3000:3000
     restart: always
+    environment:
+      - REDIS_URL=redis
+      - REDIS_PORT=6379
+      - NATS_URL=nats://nats:4222
     depends_on:
       - nats
+      - redis
   users-service:
     build:
       context: .
@@ -23,11 +28,14 @@ services:
       - DATABASE_URL=mongodb://users-db
       - DATABASE_PORT=27017
       - NATS_URL=nats://nats:4222
+      - REDIS_URL=redis
+      - REDIS_PORT=6379
     deploy:
       replicas: 3
     depends_on:
       - nats
       - users-db
+      - redis
   users-db:
     image: mongo:5.0.26
     restart: always
@@ -35,10 +43,12 @@ services:
       - 27017:27017
   nats:
     image: nats:alpine
+    restart: always
     ports:
       - 4222:4222
       - 6222:6222
   redis:
     image: redis:alpine
+    restart: always
     ports:
       - 6379:6379

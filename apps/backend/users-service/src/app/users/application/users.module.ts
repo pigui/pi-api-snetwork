@@ -7,14 +7,18 @@ import { UsersInfraestructureModule } from '../infraestructure/users-infraestruc
 import { CreateUserWithPasswordCommandHandler } from './commands/create-user-with-password.command-handler';
 import { UserCreatedEventHandler } from './events/user-created.event-handler';
 import { UserSaga } from './sagas/user.saga';
+import { GetUsersQueryHandler } from './queries/get-users.query-handler';
+import { UsersController } from '../presentations/users.controller';
 
 @Module({
+  controllers: [UsersController],
   imports: [GenerateIdModule, DateModule, UsersInfraestructureModule],
   providers: [
     UsersService,
     UserFactory,
     CreateUserWithPasswordCommandHandler,
     UserCreatedEventHandler,
+    GetUsersQueryHandler,
     UserSaga,
   ],
 })

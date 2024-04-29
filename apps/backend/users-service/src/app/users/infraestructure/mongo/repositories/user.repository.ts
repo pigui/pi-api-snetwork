@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../../../application/repositories/user.repository';
-import { Observable, from, map, switchMap } from 'rxjs';
+import { Observable, from, map, switchMap, toArray } from 'rxjs';
 import { User } from '../../../application/entities/user';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { HashingService } from '@app/backend/shared/util/hashing';
 import { UserMapper } from '../mappers/user.mapper';
 import { UserEntity } from '../entities/user.entity';
-import { UUID } from 'mongodb';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -16,13 +15,14 @@ export class UserRepositoryImpl implements UserRepository {
     private readonly hashingService: HashingService,
     private readonly userMapper: UserMapper
   ) {}
-
   create(user: User): Observable<User> {
     const entity = this.userMapper.toPersistence(user);
     const model = new this.userModel<UserEntity>(entity);
 
     return from(model.save()).pipe(
-      map((newUser) => this.userMapper.toDomain(newUser.toJSON()))
+      map((newUser) => {
+        return this.userMapper.toDomain(newUser.toJSON());
+      })
     );
   }
 
@@ -42,6 +42,18 @@ export class UserRepositoryImpl implements UserRepository {
           map((updateUser: UserEntity) => this.userMapper.toDomain(updateUser))
         )
       )
+    );
+  }
+
+  find(filterQuery: FilterQuery<UserEntity>): Observable<Array<User>> {
+    const entities = this.userModel.find(filterQuery).lean<Array<UserEntity>>();
+    return from(entities).pipe(
+      switchMap((users: Array<UserEntity>) => {
+        return from(users).pipe(
+          map((user) => this.userMapper.toDomain(user)),
+          toArray()
+        );
+      })
     );
   }
 

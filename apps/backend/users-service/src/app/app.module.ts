@@ -8,6 +8,7 @@ import configurations from './configs/configurations';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UsersInfraestructureModule } from './users/infraestructure/users-infraestructure.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PubModule } from '@app/backend/shared/common/pub';
 
 @Module({
   imports: [
@@ -20,6 +21,16 @@ import { MongooseModule } from '@nestjs/mongoose';
         )}/users`;
         return {
           uri,
+        };
+      },
+      imports: [ConfigModule],
+      inject: [ConfigService],
+    }),
+    PubModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        return {
+          redisHost: configService.get('REDIS_URL'),
+          redisPort: parseInt(configService.get('REDIS_PORT'), 10),
         };
       },
       imports: [ConfigModule],

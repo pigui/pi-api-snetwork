@@ -15,6 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@app/backend/shared/common/messages": [
+        "libs/backend/shared/common/messages/src/index.ts"
+      ],
+      "@app/backend/shared/common/pub": [
+        "libs/backend/shared/common/pub/src/index.ts"
+      ],
       "@app/backend/shared/util/date": [
         "libs/backend/shared/util/date/src/index.ts"
       ],

@@ -13,6 +13,7 @@ import {
 } from 'rxjs';
 import { ConflictException, ServiceUnavailableException } from '@nestjs/common';
 import { UserAggregateRoot } from '../root/user.root';
+import { RpcException } from '@nestjs/microservices';
 
 @CommandHandler(CreateUserWithPasswordCommand)
 export class CreateUserWithPasswordCommandHandler
@@ -29,7 +30,7 @@ export class CreateUserWithPasswordCommandHandler
       .pipe(
         switchMap((findUser) => {
           if (findUser) {
-            return throwError(() => new ConflictException());
+            return throwError(() => new RpcException(new ConflictException()));
           }
           const user = this.userFactory.create(
             command.email,
@@ -39,7 +40,9 @@ export class CreateUserWithPasswordCommandHandler
           return this.userRepository.create(user).pipe(
             switchMap((user) => {
               if (!user) {
-                return throwError(() => new ServiceUnavailableException());
+                return throwError(
+                  () => new RpcException(new ServiceUnavailableException())
+                );
               }
               return this.userRepository
                 .addPassword(user, command.password)
@@ -47,7 +50,8 @@ export class CreateUserWithPasswordCommandHandler
                   switchMap((userPassword) => {
                     if (!userPassword) {
                       return throwError(
-                        () => new ServiceUnavailableException()
+                        () =>
+                          new RpcException(new ServiceUnavailableException())
                       );
                     }
                     return of(userPassword).pipe(

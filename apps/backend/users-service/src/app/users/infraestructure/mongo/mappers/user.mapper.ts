@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../../../application/entities/user';
 import { UserEntity } from '../entities/user.entity';
-import { UUID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class UserMapper {
   toDomain(entity: UserEntity): User {
     return new User(
-      entity._id.toHexString(),
+      entity._id.toString(),
       entity.email,
       entity.firstName,
       entity.lastName,
@@ -18,7 +18,7 @@ export class UserMapper {
 
   toPersistence(domain: User): UserEntity {
     const entity = new UserEntity();
-    entity._id = new UUID(domain.id);
+    entity._id = new ObjectId(domain.id);
     entity.email = domain.email;
     entity.firstName = domain.firstName;
     entity.lastName = domain.firstName;
