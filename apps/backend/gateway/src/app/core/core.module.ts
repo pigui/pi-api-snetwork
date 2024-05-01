@@ -4,10 +4,10 @@ import { ExceptionFilter } from './exceptions/rpc-exception.filter';
 
 @Module({
   providers: [
-    {
+    /*{
       provide: APP_FILTER,
       useClass: ExceptionFilter,
-    },
+    },*/
   ],
 })
 export class CoreModule {}

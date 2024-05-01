@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersResolver } from './users.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { MESSAGE_BROKER } from './constants/message-broker';
+import { USERS_MESSAGE_BROKER } from './constants/message-broker';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -10,7 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule,
     ClientsModule.registerAsync([
       {
-        name: MESSAGE_BROKER,
+        name: USERS_MESSAGE_BROKER,
         useFactory: (configService: ConfigService) => {
           return {
             transport: Transport.NATS,

@@ -9,6 +9,10 @@ import { UserCreatedEventHandler } from './events/user-created.event-handler';
 import { UserSaga } from './sagas/user.saga';
 import { GetUsersQueryHandler } from './queries/get-users.query-handler';
 import { UsersController } from '../presentations/users.controller';
+import { GetUserByEmailQueryHandler } from './queries/get-user-by-email.query-handler';
+import { GetPasswordQueryHandler } from './queries/get-password.query-handler';
+import { GetUserByIdQueryHandler } from './queries/get-user-by-id.query-handler';
+import { ComparePasswordCommandHandler } from './commands/compare-password.command-handler';
 
 @Module({
   controllers: [UsersController],
@@ -17,8 +21,12 @@ import { UsersController } from '../presentations/users.controller';
     UsersService,
     UserFactory,
     CreateUserWithPasswordCommandHandler,
+    ComparePasswordCommandHandler,
     UserCreatedEventHandler,
     GetUsersQueryHandler,
+    GetUserByEmailQueryHandler,
+    GetPasswordQueryHandler,
+    GetUserByIdQueryHandler,
     UserSaga,
   ],
 })

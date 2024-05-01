@@ -5,6 +5,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { UserFactory } from '../factories/user.factory';
 import {
   Observable,
+  iif,
   lastValueFrom,
   of,
   switchMap,
@@ -38,33 +39,32 @@ export class CreateUserWithPasswordCommandHandler
             command.lastName
           );
           return this.userRepository.create(user).pipe(
-            switchMap((user) => {
-              if (!user) {
-                return throwError(
-                  () => new RpcException(new ServiceUnavailableException())
-                );
-              }
-              return this.userRepository
-                .addPassword(user, command.password)
-                .pipe(
-                  switchMap((userPassword) => {
-                    if (!userPassword) {
-                      return throwError(
-                        () =>
-                          new RpcException(new ServiceUnavailableException())
+            switchMap((userCreated: User) => {
+              return iif(
+                () => !!userCreated,
+                this.userRepository
+                  .addPassword(userCreated, command.password)
+                  .pipe(
+                    switchMap((userPassword: User) => {
+                      const UserModel =
+                        this.publisher.mergeClassContext(UserAggregateRoot);
+                      const model = new UserModel();
+                      model.create(userCreated);
+                      model.commit();
+                      return iif(
+                        () => !!userPassword,
+                        of(userPassword),
+                        throwError(
+                          () =>
+                            new RpcException(new ServiceUnavailableException())
+                        )
                       );
-                    }
-                    return of(userPassword).pipe(
-                      tap((userCreated: User) => {
-                        const UserModel =
-                          this.publisher.mergeClassContext(UserAggregateRoot);
-                        const model = new UserModel();
-                        model.create(userCreated);
-                        model.commit();
-                      })
-                    );
-                  })
-                );
+                    })
+                  ),
+                throwError(
+                  () => new RpcException(new ServiceUnavailableException())
+                )
+              );
             })
           );
         })

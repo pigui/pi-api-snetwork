@@ -17,6 +17,8 @@ services:
     depends_on:
       - nats
       - redis
+      - users-service
+      - auth-service
   users-service:
     build:
       context: .
@@ -41,6 +43,26 @@ services:
     restart: always
     ports:
       - 27017:27017
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - APP_NAME=auth-service
+    restart: always
+    environment:
+      - NATS_URL=nats://nats:4222
+      - REDIS_URL=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=YOUR_SECRET_KEY_HERE
+      - JWT_TOKEN_AUDIENCE=auth-service:3000
+      - JWT_TOKEN_ISSUER=auth-service:3000
+      - JWT_ACCESS_TOKEN_TTL=3600
+      - JWT_REFRESH_TOKEN_TTL=86400
+    depends_on:
+      - nats
+      - users-db
+      - redis
   nats:
     image: nats:alpine
     restart: always

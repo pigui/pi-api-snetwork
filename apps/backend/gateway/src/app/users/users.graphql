@@ -16,8 +16,18 @@ input CreateUserWithPasswordInput {
   password: String!
 }
 
+input FindUserByEmailInput {
+  email: String!
+}
+
+input FindUserByIdInput {
+  id: ID!
+}
+
 type Query {
   findUsers: [User!]
+  findUserByEmail(findUserByEmailInput: FindUserByEmailInput!): User
+  findUserById(findUserByIdInput: FindUserByIdInput!): User
 }
 
 type Mutation {

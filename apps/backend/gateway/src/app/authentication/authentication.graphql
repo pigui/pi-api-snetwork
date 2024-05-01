@@ -1,0 +1,21 @@
+type AccessToken {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
+input SignInWithPasswordInput {
+  email: String!
+  password: String!
+}
+
+input RefreshTokenInput {
+  token: String!
+}
+
+type Mutation {
+  signInWithPassword(
+    signInWithPasswordInput: SignInWithPasswordInput!
+  ): AccessToken
+  refreshToken(refreshTokenInput: RefreshTokenInput!): AccessToken
+}

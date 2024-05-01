@@ -19,7 +19,7 @@ COPY . .
 RUN npx nx reset
 
 # Creates a "dist" folder with the production build
-RUN npm run build:${APP_NAME}
+RUN npx nx run ${APP_NAME}:build --prod
 
 # Start the server using the production build
 CMD node dist/apps/backend/${APP_NAME}/main.js

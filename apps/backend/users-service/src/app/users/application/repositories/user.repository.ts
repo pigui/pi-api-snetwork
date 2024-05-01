@@ -9,4 +9,6 @@ export abstract class UserRepository {
   abstract find(filterQuery: FilterQuery<UserEntity>): Observable<Array<User>>;
   abstract findById(id: string): Observable<User | null>;
   abstract findByEmail(email: string): Observable<User | null>;
+  abstract getPassword(user: User): Observable<string | null>;
+  abstract comparePassword(user: User, password: string): Observable<boolean>;
 }

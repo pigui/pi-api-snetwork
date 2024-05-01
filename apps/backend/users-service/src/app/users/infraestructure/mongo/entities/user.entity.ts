@@ -6,7 +6,7 @@ export type UserDocument = moongose.HydratedDocument<UserEntity>;
 
 @Schema()
 export class UserEntity {
-  @Prop({ type: moongose.SchemaTypes.ObjectId })
+  @Prop({ type: moongose.Types.ObjectId })
   _id: moongose.Types.ObjectId;
 
   @Prop({ unique: true })

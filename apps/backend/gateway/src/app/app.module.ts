@@ -10,6 +10,7 @@ import { join } from 'path';
 import { PubModule } from '@app/backend/shared/common/pub';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CoreModule } from './core/core.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -33,6 +34,7 @@ import { CoreModule } from './core/core.module';
       inject: [ConfigService],
     }),
     UsersModule,
+    AuthenticationModule,
     CoreModule,
   ],
   controllers: [AppController],
