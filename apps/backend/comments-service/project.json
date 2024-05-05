@@ -1,0 +1,24 @@
+{
+  "name": "comments-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/comments-service/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "comments-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "comments-service:build:development"
+        },
+        "production": {
+          "buildTarget": "comments-service:build:production"
+        }
+      }
+    }
+  }
+}

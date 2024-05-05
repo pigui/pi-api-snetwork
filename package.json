@@ -8,7 +8,11 @@
     "start:users-service": "nx run users-service:serve",
     "build:users-service": "npx nx run users-service:build --prod",
     "start:auth-service": "nx run auth-service:serve",
-    "build:auth-service": "npx nx run auth-service:build --prod"
+    "build:auth-service": "npx nx run auth-service:build --prod",
+    "start:posts-service": "nx run posts-service:serve",
+    "build:posts-service": "npx nx run posts-service:build --prod",
+    "start:comments-service": "nx run comments-service:serve",
+    "build:comments-service": "npx nx run comments-service:build --prod"
   },
   "private": true,
   "devDependencies": {

@@ -1,0 +1,33 @@
+scalar Date
+
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  user: User!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input FindPostByIdInput {
+  id: ID!
+}
+
+input CreatePostInput {
+  title: String!
+  description: String!
+}
+
+type Query {
+  findPosts(): [Post!]
+  findPostById(findPostByIdInput: FindPostByIdInput!): Post
+  findMePosts(): [Post!]
+}
+
+type Mutation {
+  createPost(createPostInput: CreatePostInput!): Post
+}
+
+type Subscription {
+  postCreated: Post
+}

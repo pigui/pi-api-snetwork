@@ -1,0 +1,24 @@
+{
+  "name": "posts-service",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/posts-service/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "posts-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "posts-service:build:development"
+        },
+        "production": {
+          "buildTarget": "posts-service:build:production"
+        }
+      }
+    }
+  }
+}
