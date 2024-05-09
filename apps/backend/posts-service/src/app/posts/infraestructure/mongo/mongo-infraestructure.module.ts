@@ -9,7 +9,10 @@ import { PostMapper } from './mappers/post.mapper';
   imports: [
     MongooseModule.forFeature([{ name: PostEntity.name, schema: PostSchema }]),
   ],
-  providers: [{ provide: PostRepository, useClass: PostRepositoryImpl }],
-  exports: [PostRepository, PostMapper],
+  providers: [
+    { provide: PostRepository, useClass: PostRepositoryImpl },
+    PostMapper,
+  ],
+  exports: [PostRepository],
 })
 export class MongoInfraestructureModule {}

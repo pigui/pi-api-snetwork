@@ -23,8 +23,8 @@ export class PostsResolver {
     return this.postsService.findById(id);
   }
 
-  @Query('findPostByUser')
-  findPostByUser(@ActiveUser() user: User) {
+  @Query('findMePosts')
+  findMePosts(@ActiveUser() user: User) {
     return this.postsService.findByUser(user);
   }
 

@@ -20,6 +20,7 @@ services:
       - users-service
       - auth-service
       - posts-service
+      - comments-service
   users-service:
     build:
       context: .
@@ -78,7 +79,7 @@ services:
       - REDIS_URL=redis
       - REDIS_PORT=6379
     deploy:
-      replicas: 3
+      replicas: 1
     depends_on:
       - nats
       - posts-db
@@ -86,8 +87,28 @@ services:
   posts-db:
     image: mongo:5.0.26
     restart: always
-    ports:
-      - 27017:27017
+  comments-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - APP_NAME=comments-service
+    restart: always
+    environment:
+      - DATABASE_URL=mongodb://comments-db
+      - DATABASE_PORT=27017
+      - NATS_URL=nats://nats:4222
+      - REDIS_URL=redis
+      - REDIS_PORT=6379
+    deploy:
+      replicas: 1
+    depends_on:
+      - nats
+      - comments-db
+      - redis
+  comments-db:
+    image: mongo:5.0.26
+    restart: always
   nats:
     image: nats:alpine
     restart: always

@@ -19,15 +19,15 @@ input CreatePostInput {
 }
 
 type Query {
-  findPosts(): [Post!]
+  findPosts: [Post!]
   findPostById(findPostByIdInput: FindPostByIdInput!): Post
-  findMePosts(): [Post!]
+  findMePosts: [Post!]
 }
 
 type Mutation {
-  createPost(createPostInput: CreatePostInput!): Post
+  createPost(createPostInput: CreatePostInput!): Post!
 }
 
 type Subscription {
-  postCreated: Post
+  postCreated: Post!
 }
