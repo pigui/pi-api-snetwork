@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/application/users.module';
 import configurations from './configs/configurations';
@@ -39,7 +37,5 @@ import { PubModule } from '@app/shared/common/pub';
     UsersModule,
     UsersInfraestructureModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

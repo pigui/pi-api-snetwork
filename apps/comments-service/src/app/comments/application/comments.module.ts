@@ -16,6 +16,7 @@ import { CommentFactory } from './factories/comment.factory';
 import { GetCommentsQueryHandler } from './queries/get-comments.query-handler';
 import { GetCommentByIdQueryHandler } from './queries/get-comment-by-id.query-handler';
 import { GetCommentByUserQueryHandler } from './queries/get-comment-by-user.query-handler';
+import { GetCommentByPostIdQueryHandler } from './queries/get-comment-by-post-id.query-handler';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { GetCommentByUserQueryHandler } from './queries/get-comment-by-user.quer
     GetCommentsQueryHandler,
     GetCommentByIdQueryHandler,
     GetCommentByUserQueryHandler,
+    GetCommentByPostIdQueryHandler,
   ],
 })
 export class CommentsModule {}

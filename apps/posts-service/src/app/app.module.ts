@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import configurations from './configs/configurations';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -37,7 +35,5 @@ import { PostsModule } from './posts/application/posts.module';
     }),
     PostsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
