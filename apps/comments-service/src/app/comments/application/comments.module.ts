@@ -17,8 +17,10 @@ import { GetCommentsQueryHandler } from './queries/get-comments.query-handler';
 import { GetCommentByIdQueryHandler } from './queries/get-comment-by-id.query-handler';
 import { GetCommentByUserQueryHandler } from './queries/get-comment-by-user.query-handler';
 import { GetCommentByPostIdQueryHandler } from './queries/get-comment-by-post-id.query-handler';
+import { CommentsController } from '../presentations/comments.controller';
 
 @Module({
+  controllers: [CommentsController],
   imports: [
     CommentsInfraestructureModule,
     DateModule,

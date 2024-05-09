@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CoreModule } from './core/core.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -35,6 +36,7 @@ import { PostsModule } from './posts/posts.module';
     AuthenticationModule,
     CoreModule,
     PostsModule,
+    CommentsModule,
   ],
 })
 export class AppModule {}

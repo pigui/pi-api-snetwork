@@ -1,0 +1,33 @@
+type Comment {
+  id: ID!
+  content: String!
+  user: User!
+  createdAt: Date!
+  updated: Date!
+}
+
+input CreateCommentInput {
+  content: String!
+  postId: String!
+}
+
+input FindCommentByIdInput {
+  id: ID!
+}
+
+input FindCommentByPostIdInput {
+  postId: String!
+}
+
+type Query {
+  findComments: [Comment]
+  findCommentById(findCommentByIdInput: FindCommentByIdInput!): Comment
+  findCommentByPostId(
+    findCommentByPostIdInput: FindCommentByPostIdInput
+  ): [Comment!]
+  findMeComments: [Comment!]
+}
+
+type Mutation {
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+}

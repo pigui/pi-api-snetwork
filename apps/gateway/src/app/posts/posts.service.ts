@@ -7,7 +7,7 @@ import {
 import { User } from '@app/shared/entities';
 import { Observable, catchError, throwError } from 'rxjs';
 import { PostMessage, UserMessages } from '@app/shared/common/messages';
-import * as Entites from '@app/shared/entities';
+import type * as Entites from '@app/shared/entities';
 
 @Injectable()
 export class PostsService {

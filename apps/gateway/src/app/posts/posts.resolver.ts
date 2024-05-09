@@ -1,7 +1,7 @@
 import { RedisPubSub } from '@app/shared/common/pub';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PostsService } from './posts.service';
-import { FindPostByIdInput } from './dto/find-user-by-id.input';
+import { FindPostByIdInput } from './dto/find-post-by-id.input';
 import { ActiveUser } from '../authentication/decorators/active-user.decortator';
 import { User } from '@app/shared/entities';
 import { CreatePostInput } from './dto/create-post.input';
