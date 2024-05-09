@@ -1,5 +1,5 @@
-import { DateService } from '@app/backend/shared/util/date';
-import { GenerateIdService } from '@app/backend/shared/util/generate-id';
+import { DateService } from '@app/shared/util/date';
+import { GenerateIdService } from '@app/shared/util/generate-id';
 import { Injectable, Logger } from '@nestjs/common';
 import { Comment } from '../entities/comment';
 

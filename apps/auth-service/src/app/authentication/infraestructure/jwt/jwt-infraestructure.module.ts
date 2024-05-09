@@ -4,7 +4,7 @@ import { AuthenticationRepository } from '../../application/repositories/authent
 import { AuthenticationRepositoryImpl } from './repositories/authentication.repository';
 import { RefreshTokenStorageModule } from './refresh-token-storage/refresh-token-storage.module';
 import jwtConfig from './config/jwt.config';
-import { GenerateIdModule } from '@app/backend/shared/util/generate-id';
+import { GenerateIdModule } from '@app/shared/util/generate-id';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({

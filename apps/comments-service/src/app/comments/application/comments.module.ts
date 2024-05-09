@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CommentsInfraestructureModule } from '../infraestructure/comments-infraestructure.module';
-import { DateModule } from '@app/backend/shared/util/date';
-import { GenerateIdModule } from '@app/backend/shared/util/generate-id';
+import { DateModule } from '@app/shared/util/date';
+import { GenerateIdModule } from '@app/shared/util/generate-id';
 import { CreateCommentCommandHandler } from './commands/create-comment.command-handler';
 import {
   POSTS_MESSAGE_BROKER,
@@ -12,6 +12,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommentCreatedEventHandler } from './events/comment-created.event-handler';
 import { CommentSaga } from './sagas/comment.saga';
+import { CommentFactory } from './factories/comment.factory';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { CommentSaga } from './sagas/comment.saga';
     CreateCommentCommandHandler,
     CommentCreatedEventHandler,
     CommentSaga,
+    CommentFactory,
   ],
 })
 export class CommentsModule {}

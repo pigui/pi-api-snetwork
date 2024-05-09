@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Post } from '../entities/post';
-import { GenerateIdService } from '@app/backend/shared/util/generate-id';
-import { DateService } from '@app/backend/shared/util/date';
+import { GenerateIdService } from '@app/shared/util/generate-id';
+import { DateService } from '@app/shared/util/date';
 
 @Injectable()
 export class PostFactory {

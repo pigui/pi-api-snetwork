@@ -1,4 +1,4 @@
-import { RedisPubSub } from '@app/backend/shared/common/pub';
+import { RedisPubSub } from '@app/shared/common/pub';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PostsService } from './posts.service';
 import { FindPostByIdInput } from './dto/find-user-by-id.input';

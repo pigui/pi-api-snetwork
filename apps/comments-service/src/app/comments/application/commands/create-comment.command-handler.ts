@@ -18,7 +18,7 @@ import {
   switchMap,
   throwError,
 } from 'rxjs';
-import { PostMessage, UserMessages } from '@app/backend/shared/common/messages';
+import { PostMessage, UserMessages } from '@app/shared/common/messages';
 import { Post, User } from '@app/shared/entities';
 import { CommentAggregateRoot } from '../root/comment.root';
 

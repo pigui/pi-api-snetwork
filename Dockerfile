@@ -22,4 +22,4 @@ RUN npx nx reset
 RUN npx nx run ${APP_NAME}:build --prod
 
 # Start the server using the production build
-CMD node dist/apps/backend/${APP_NAME}/main.js
+CMD node dist/apps/${APP_NAME}/main.js

@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { CreateUserWithPasswordInput } from './dto/create-user.input';
-import { RedisPubSub } from '@app/backend/shared/common/pub';
+import { RedisPubSub } from '@app/shared/common/pub';
 import { FindUserByEmailInput } from './dto/find-user-by-email.input';
 import { FindUserByIdInput } from './dto/find-user-by-id.input';
 

@@ -19,7 +19,7 @@ import {
 import { AUTH_MESSAGE_BROKER } from '../constants/message-broker';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
-import { AuthMessage } from '@app/backend/shared/common/messages';
+import { AuthMessage } from '@app/shared/common/messages';
 import { User } from '@app/shared/entities';
 import { REQUEST_USER_KEY } from '../constants/user-request';
 

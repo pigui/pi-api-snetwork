@@ -7,7 +7,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { join } from 'path';
-import { PubModule } from '@app/backend/shared/common/pub';
+import { PubModule } from '@app/shared/common/pub';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CoreModule } from './core/core.module';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -19,7 +19,7 @@ import { PostsModule } from './posts/posts.module';
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
       definitions: {
-        path: join(process.cwd(), 'apps/backend/gateway/src/graphql.ts'),
+        path: join(process.cwd(), 'apps//gateway/src/graphql.ts'),
         outputAs: 'interface',
       },
       installSubscriptionHandlers: true,

@@ -4,7 +4,7 @@ import { Observable, from, iif, map, of, switchMap, toArray } from 'rxjs';
 import { User } from '../../../application/entities/user';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Types } from 'mongoose';
-import { HashingService } from '@app/backend/shared/util/hashing';
+import { HashingService } from '@app/shared/util/hashing';
 import { UserMapper } from '../mappers/user.mapper';
 import { UserEntity } from '../entities/user.entity';
 

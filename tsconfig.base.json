@@ -15,21 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@app/backend/shared/common/messages": [
-        "libs/backend/shared/common/messages/src/index.ts"
+      "@app/shared/common/messages": [
+        "libs/shared/common/messages/src/index.ts"
       ],
-      "@app/backend/shared/common/pub": [
-        "libs/backend/shared/common/pub/src/index.ts"
+      "@app/shared/common/pub": ["libs/shared/common/pub/src/index.ts"],
+      "@app/shared/util/date": ["libs/shared/util/date/src/index.ts"],
+      "@app/shared/util/generate-id": [
+        "libs/shared/util/generate-id/src/index.ts"
       ],
-      "@app/backend/shared/util/date": [
-        "libs/backend/shared/util/date/src/index.ts"
-      ],
-      "@app/backend/shared/util/generate-id": [
-        "libs/backend/shared/util/generate-id/src/index.ts"
-      ],
-      "@app/backend/shared/util/hashing": [
-        "libs/backend/shared/util/hashing/src/index.ts"
-      ],
+      "@app/shared/util/hashing": ["libs/shared/util/hashing/src/index.ts"],
       "@app/shared/entities": ["libs/shared/entities/src/index.ts"]
     }
   },

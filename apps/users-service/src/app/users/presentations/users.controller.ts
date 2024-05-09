@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { UsersService } from '../application/users.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UserMessages } from '@app/backend/shared/common/messages';
+import { UserMessages } from '@app/shared/common/messages';
 import { CreateUserWithPasswordDto } from './dto/create-user-with-password.dto';
 import { FindUserByEmailDto } from './dto/find-by-email.dto';
 import { FindUserByIdDto } from './dto/find-by-id.dto';

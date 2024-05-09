@@ -1,7 +1,7 @@
-import { GenerateIdService } from '@app/backend/shared/util/generate-id';
+import { GenerateIdService } from '@app/shared/util/generate-id';
 import { Injectable, Logger } from '@nestjs/common';
 import { User } from '../entities/user';
-import { DateService } from '@app/backend/shared/util/date';
+import { DateService } from '@app/shared/util/date';
 
 @Injectable()
 export class UserFactory {

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { AuthenticationService } from '../application/authentication.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AuthMessage } from '@app/backend/shared/common/messages';
+import { AuthMessage } from '@app/shared/common/messages';
 import { SignInWithPasswordDto } from './dto/sign-in-with-password.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { VerifyTokenDto } from './dto/verify-token.dto';

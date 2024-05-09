@@ -6,7 +6,7 @@ import {
 } from './constants/message-broker';
 import { User } from '@app/shared/entities';
 import { Observable, catchError, throwError } from 'rxjs';
-import { PostMessage, UserMessages } from '@app/backend/shared/common/messages';
+import { PostMessage, UserMessages } from '@app/shared/common/messages';
 import * as Entites from '@app/shared/entities';
 
 @Injectable()

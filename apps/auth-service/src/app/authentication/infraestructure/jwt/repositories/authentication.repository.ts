@@ -22,7 +22,7 @@ import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { User } from '@app/shared/entities';
 import { RefreshTokenStorage } from '../refresh-token-storage/refresh-token-storage';
-import { GenerateIdService } from '@app/backend/shared/util/generate-id';
+import { GenerateIdService } from '@app/shared/util/generate-id';
 
 @Injectable()
 export class AuthenticationRepositoryImpl implements AuthenticationRepository {

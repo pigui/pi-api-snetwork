@@ -13,7 +13,7 @@ import { User } from '@app/shared/entities';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { USERS_MESSAGE_BROKER } from '../constants/message-broker';
 import { Inject, UnauthorizedException } from '@nestjs/common';
-import { UserMessages } from '@app/backend/shared/common/messages';
+import { UserMessages } from '@app/shared/common/messages';
 
 @CommandHandler(VerifyTokenCommand)
 export class VerifyTokenCommandHandler

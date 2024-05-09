@@ -1,6 +1,6 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { PostCreatedEvent } from './post-created.event';
-import { RedisPubSub } from '@app/backend/shared/common/pub';
+import { RedisPubSub } from '@app/shared/common/pub';
 
 @EventsHandler(PostCreatedEvent)
 export class PostCreatedEventHandler

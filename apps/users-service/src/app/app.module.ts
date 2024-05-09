@@ -8,7 +8,7 @@ import configurations from './configs/configurations';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UsersInfraestructureModule } from './users/infraestructure/users-infraestructure.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PubModule } from '@app/backend/shared/common/pub';
+import { PubModule } from '@app/shared/common/pub';
 
 @Module({
   imports: [

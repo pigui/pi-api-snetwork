@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { GenerateIdModule } from '@app/backend/shared/util/generate-id';
-import { DateModule } from '@app/backend/shared/util/date';
+import { GenerateIdModule } from '@app/shared/util/generate-id';
+import { DateModule } from '@app/shared/util/date';
 import { UserFactory } from './factories/user.factory';
 import { UsersInfraestructureModule } from '../infraestructure/users-infraestructure.module';
 import { CreateUserWithPasswordCommandHandler } from './commands/create-user-with-password.command-handler';

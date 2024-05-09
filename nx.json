@@ -35,11 +35,11 @@
         "targetName": "test"
       },
       "exclude": [
-        "apps/backend/gateway-e2e/**/*",
-        "apps/backend/users-service-e2e/**/*",
-        "apps/backend/auth-service-e2e/**/*",
-        "apps/backend/posts-service-e2e/**/*",
-        "apps/backend/comments-service-e2e/**/*"
+        "apps/gateway-e2e/**/*",
+        "apps/users-service-e2e/**/*",
+        "apps/auth-service-e2e/**/*",
+        "apps/posts-service-e2e/**/*",
+        "apps/comments-service-e2e/**/*"
       ]
     }
   ]

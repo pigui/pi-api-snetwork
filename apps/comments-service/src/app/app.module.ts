@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CommentsModule } from './comments/application/comments.module';
 import configurations from './configs/configurations';
-import { PubModule } from '@app/backend/shared/common/pub';
+import { PubModule } from '@app/shared/common/pub';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
