@@ -21,5 +21,7 @@ RUN npx nx reset
 # Creates a "dist" folder with the production build
 RUN npx nx run ${APP_NAME}:build --prod
 
+RUN npx nx reset
+
 # Start the server using the production build
 CMD node dist/apps/${APP_NAME}/main.js

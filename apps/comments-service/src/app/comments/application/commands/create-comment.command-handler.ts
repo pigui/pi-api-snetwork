@@ -10,6 +10,7 @@ import {
 } from '../constants/message-broker';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
+  Observable,
   forkJoin,
   iif,
   lastValueFrom,
@@ -35,7 +36,7 @@ export class CreateCommentCommandHandler
   ) {}
 
   execute(command: CreateCommentCommand): Promise<Comment> {
-    const comment$ = forkJoin([
+    const comment$: Observable<Comment> = forkJoin([
       this.usersClient
         .send<User>(UserMessages.FIND_BY_ID, {
           id: command.user.id,

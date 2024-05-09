@@ -19,7 +19,7 @@ import { PostsModule } from './posts/posts.module';
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
       definitions: {
-        path: join(process.cwd(), 'apps//gateway/src/graphql.ts'),
+        path: join(process.cwd(), 'apps/gateway/src/app/graphql.ts'),
         outputAs: 'interface',
       },
       installSubscriptionHandlers: true,

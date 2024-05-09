@@ -7,6 +7,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         - APP_NAME=gateway
+    command: npm run start:gateway
     ports:
       - 3000:3000
     restart: always
@@ -14,6 +15,10 @@ services:
       - REDIS_URL=redis
       - REDIS_PORT=6379
       - NATS_URL=nats://nats:4222
+    volumes:
+      - ./libs:/usr/src/app/libs
+      - ./package.json:/usr/src/app/package.json
+      - ./apps/gateway:/usr/src/app/apps/gateway
     depends_on:
       - nats
       - redis
@@ -34,6 +39,10 @@ services:
       - NATS_URL=nats://nats:4222
       - REDIS_URL=redis
       - REDIS_PORT=6379
+    volumes:
+      - ./libs:/usr/src/app/libs
+      - ./package.json:/usr/src/app/package.json
+      - ./apps/users-service:/usr/src/app/apps/users-service
     deploy:
       replicas: 3
     depends_on:
@@ -51,6 +60,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         - APP_NAME=auth-service
+    command: npm run start:auth-service
     restart: always
     environment:
       - NATS_URL=nats://nats:4222
@@ -61,6 +71,10 @@ services:
       - JWT_TOKEN_ISSUER=auth-service:3000
       - JWT_ACCESS_TOKEN_TTL=3600
       - JWT_REFRESH_TOKEN_TTL=86400
+    volumes:
+      - ./libs:/usr/src/app/libs
+      - ./package.json:/usr/src/app/package.json
+      - ./apps/auth-service:/usr/src/app/apps/auth-service
     depends_on:
       - nats
       - users-db
@@ -71,6 +85,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         - APP_NAME=posts-service
+    command: npm run start:posts-service
     restart: always
     environment:
       - DATABASE_URL=mongodb://posts-db
@@ -78,6 +93,10 @@ services:
       - NATS_URL=nats://nats:4222
       - REDIS_URL=redis
       - REDIS_PORT=6379
+    volumes:
+      - ./libs:/usr/src/app/libs
+      - ./package.json:/usr/src/app/package.json
+      - ./apps/posts-service:/usr/src/app/apps/posts-service
     deploy:
       replicas: 1
     depends_on:
@@ -93,6 +112,7 @@ services:
       dockerfile: ./Dockerfile
       args:
         - APP_NAME=comments-service
+    command: npm run start:comments-service
     restart: always
     environment:
       - DATABASE_URL=mongodb://comments-db
@@ -100,6 +120,10 @@ services:
       - NATS_URL=nats://nats:4222
       - REDIS_URL=redis
       - REDIS_PORT=6379
+    volumes:
+      - ./libs:/usr/src/app/libs
+      - ./package.json:/usr/src/app/package.json
+      - ./apps/comments-service:/usr/src/app/apps/comments-service
     deploy:
       replicas: 1
     depends_on:

@@ -13,6 +13,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommentCreatedEventHandler } from './events/comment-created.event-handler';
 import { CommentSaga } from './sagas/comment.saga';
 import { CommentFactory } from './factories/comment.factory';
+import { GetCommentsQueryHandler } from './queries/get-comments.query-handler';
+import { GetCommentByIdQueryHandler } from './queries/get-comment-by-id.query-handler';
+import { GetCommentByUserQueryHandler } from './queries/get-comment-by-user.query-handler';
 
 @Module({
   imports: [
@@ -57,6 +60,9 @@ import { CommentFactory } from './factories/comment.factory';
     CommentCreatedEventHandler,
     CommentSaga,
     CommentFactory,
+    GetCommentsQueryHandler,
+    GetCommentByIdQueryHandler,
+    GetCommentByUserQueryHandler,
   ],
 })
 export class CommentsModule {}
