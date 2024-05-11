@@ -13,10 +13,16 @@ import { GetUserByEmailQueryHandler } from './queries/get-user-by-email.query-ha
 import { GetPasswordQueryHandler } from './queries/get-password.query-handler';
 import { GetUserByIdQueryHandler } from './queries/get-user-by-id.query-handler';
 import { ComparePasswordCommandHandler } from './commands/compare-password.command-handler';
+import { InboxModule } from '@app/shared/common/inbox';
 
 @Module({
   controllers: [UsersController],
-  imports: [GenerateIdModule, DateModule, UsersInfraestructureModule],
+  imports: [
+    GenerateIdModule,
+    DateModule,
+    UsersInfraestructureModule,
+    InboxModule,
+  ],
   providers: [
     UsersService,
     UserFactory,

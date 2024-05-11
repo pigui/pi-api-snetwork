@@ -14,6 +14,7 @@ import { PostSaga } from './sagas/post.saga';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { USERS_MESSAGE_BROKER } from './constants/message-broker';
+import { InboxModule } from '@app/shared/common/inbox';
 
 @Module({
   controllers: [PostsController],
@@ -38,6 +39,7 @@ import { USERS_MESSAGE_BROKER } from './constants/message-broker';
         inject: [ConfigService],
       },
     ]),
+    InboxModule,
   ],
   providers: [
     PostsService,

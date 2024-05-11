@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@app/shared/common/inbox": ["libs/shared/common/inbox/src/index.ts"],
       "@app/shared/common/messages": [
         "libs/shared/common/messages/src/index.ts"
       ],

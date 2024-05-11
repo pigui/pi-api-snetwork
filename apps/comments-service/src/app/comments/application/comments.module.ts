@@ -18,6 +18,7 @@ import { GetCommentByIdQueryHandler } from './queries/get-comment-by-id.query-ha
 import { GetCommentByUserQueryHandler } from './queries/get-comment-by-user.query-handler';
 import { GetCommentByPostIdQueryHandler } from './queries/get-comment-by-post-id.query-handler';
 import { CommentsController } from '../presentations/comments.controller';
+import { InboxModule } from '@app/shared/common/inbox';
 
 @Module({
   controllers: [CommentsController],
@@ -56,6 +57,7 @@ import { CommentsController } from '../presentations/comments.controller';
         inject: [ConfigService],
       },
     ]),
+    InboxModule,
   ],
   providers: [
     CommentsService,
