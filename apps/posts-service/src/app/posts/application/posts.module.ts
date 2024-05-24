@@ -12,9 +12,11 @@ import { PostsController } from '../presentations/posts.controller';
 import { PostCreatedEventHandler } from './events/post-created.event-handler';
 import { PostSaga } from './sagas/post.saga';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { USERS_MESSAGE_BROKER } from './constants/message-broker';
+import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
+
 import { InboxModule } from '@app/shared/common/inbox';
+import { NatsClientsService } from '../../nats-clients/application/nats-clients.service';
+import { NatsClientsModule } from '../../nats-clients/application/nats-clients.module';
 
 @Module({
   controllers: [PostsController],
@@ -23,23 +25,17 @@ import { InboxModule } from '@app/shared/common/inbox';
     DateModule,
     GenerateIdModule,
     ConfigModule,
-    ClientsModule.registerAsync([
-      {
-        name: USERS_MESSAGE_BROKER,
-        useFactory: (configService: ConfigService) => {
-          return {
-            transport: Transport.NATS,
-            options: {
-              servers: configService.get('NATS_URL') as string,
-              queue: 'users_service',
-            },
-          };
-        },
-        imports: [ConfigModule],
-        inject: [ConfigService],
+    InboxModule.forRootAsync({
+      useFactory: (natsClients: NatsClientsService) => {
+        const clients = new Map<string, ClientProxy>();
+        clients.set(natsClients.usersBroker, natsClients.usersClient);
+        return {
+          clients,
+        };
       },
-    ]),
-    InboxModule,
+      inject: [NatsClientsService],
+      imports: [NatsClientsModule],
+    }),
   ],
   providers: [
     PostsService,

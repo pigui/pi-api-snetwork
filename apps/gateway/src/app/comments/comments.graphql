@@ -31,3 +31,7 @@ type Query {
 type Mutation {
   createComment(createCommentInput: CreateCommentInput!): Comment!
 }
+
+type Subscription {
+  commentCreated: Comment!
+}

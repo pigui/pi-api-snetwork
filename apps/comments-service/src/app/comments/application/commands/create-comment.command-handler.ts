@@ -3,12 +3,8 @@ import { Comment } from '../entities/comment';
 import { CreateCommentCommand } from './create-comment.command';
 import { CommentFactory } from '../factories/comment.factory';
 import { CommentRepository } from '../repositories/comment.repository';
-import { Inject, NotFoundException } from '@nestjs/common';
-import {
-  POSTS_MESSAGE_BROKER,
-  USERS_MESSAGE_BROKER,
-} from '../constants/message-broker';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { NotFoundException } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import {
   Observable,
   forkJoin,
@@ -22,6 +18,7 @@ import {
 import { PostMessage, UserMessages } from '@app/shared/common/messages';
 import { Post, User } from '@app/shared/entities';
 import { CommentAggregateRoot } from '../root/comment.root';
+import { NatsClientsService } from '../../../nats-clients/application/nats-clients.service';
 
 @CommandHandler(CreateCommentCommand)
 export class CreateCommentCommandHandler
@@ -30,14 +27,13 @@ export class CreateCommentCommandHandler
   constructor(
     private readonly commentFactory: CommentFactory,
     private readonly commentRepository: CommentRepository,
-    @Inject(USERS_MESSAGE_BROKER) private readonly usersClient: ClientProxy,
-    @Inject(POSTS_MESSAGE_BROKER) private readonly postsClient: ClientProxy,
+    private readonly natsClientsService: NatsClientsService,
     private readonly publisher: EventPublisher
   ) {}
 
   execute(command: CreateCommentCommand): Promise<Comment> {
     const comment$: Observable<Comment> = forkJoin([
-      this.usersClient
+      this.natsClientsService.usersClient
         .send<User>(UserMessages.FIND_BY_ID, {
           id: command.user.id,
         })
@@ -50,7 +46,7 @@ export class CreateCommentCommandHandler
             )
           )
         ),
-      this.postsClient
+      this.natsClientsService.postsClient
         .send<Post>(PostMessage.FIND_BY_ID, {
           id: command.postId,
         })

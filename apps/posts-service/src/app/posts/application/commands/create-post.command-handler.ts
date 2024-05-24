@@ -13,10 +13,10 @@ import {
 } from 'rxjs';
 import { PostAggregateRoot } from '../root/post.root';
 import { Inject, NotFoundException } from '@nestjs/common';
-import { USERS_MESSAGE_BROKER } from '../constants/message-broker';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { UserMessages } from '@app/shared/common/messages';
 import type { User } from '@app/shared/entities';
+import { NatsClientsService } from '../../../nats-clients/application/nats-clients.service';
 
 @CommandHandler(CreatePostCommand)
 export class CreatePostCommandHandler
@@ -26,7 +26,7 @@ export class CreatePostCommandHandler
     private readonly postRepository: PostRepository,
     private readonly postFactory: PostFactory,
     private readonly publisher: EventPublisher,
-    @Inject(USERS_MESSAGE_BROKER) private readonly usersClient: ClientProxy
+    private readonly natsClientsService: NatsClientsService
   ) {}
   execute(command: CreatePostCommand): Promise<Post> {
     const createPost = this.postFactory.create(
@@ -35,7 +35,7 @@ export class CreatePostCommandHandler
       command.user.id
     );
 
-    const post$ = this.usersClient
+    const post$ = this.natsClientsService.usersClient
       .send<User>(UserMessages.FIND_BY_ID, {
         id: command.user.id,
       })

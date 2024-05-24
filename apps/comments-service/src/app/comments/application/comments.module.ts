@@ -4,12 +4,7 @@ import { CommentsInfraestructureModule } from '../infraestructure/comments-infra
 import { DateModule } from '@app/shared/util/date';
 import { GenerateIdModule } from '@app/shared/util/generate-id';
 import { CreateCommentCommandHandler } from './commands/create-comment.command-handler';
-import {
-  POSTS_MESSAGE_BROKER,
-  USERS_MESSAGE_BROKER,
-} from './constants/message-broker';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientProxy } from '@nestjs/microservices';
 import { CommentCreatedEventHandler } from './events/comment-created.event-handler';
 import { CommentSaga } from './sagas/comment.saga';
 import { CommentFactory } from './factories/comment.factory';
@@ -19,45 +14,30 @@ import { GetCommentByUserQueryHandler } from './queries/get-comment-by-user.quer
 import { GetCommentByPostIdQueryHandler } from './queries/get-comment-by-post-id.query-handler';
 import { CommentsController } from '../presentations/comments.controller';
 import { InboxModule } from '@app/shared/common/inbox';
+import { NatsClientsModule } from '../../nats-clients/application/nats-clients.module';
+import { NatsClientsService } from '../../nats-clients/application/nats-clients.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   controllers: [CommentsController],
   imports: [
+    ConfigModule,
+    NatsClientsModule,
+    InboxModule.forRootAsync({
+      useFactory: (natsClients: NatsClientsService) => {
+        const clients = new Map<string, ClientProxy>();
+        clients.set(natsClients.usersBroker, natsClients.usersClient);
+        clients.set(natsClients.postsBroker, natsClients.postsClient);
+        return {
+          clients,
+        };
+      },
+      inject: [NatsClientsService],
+      imports: [NatsClientsModule],
+    }),
     CommentsInfraestructureModule,
     DateModule,
     GenerateIdModule,
-    ConfigModule,
-    ClientsModule.registerAsync([
-      {
-        name: USERS_MESSAGE_BROKER,
-        useFactory: (configService: ConfigService) => {
-          return {
-            transport: Transport.NATS,
-            options: {
-              servers: configService.get('NATS_URL') as string,
-              queue: 'users_service',
-            },
-          };
-        },
-        imports: [ConfigModule],
-        inject: [ConfigService],
-      },
-      {
-        name: POSTS_MESSAGE_BROKER,
-        useFactory: (configService: ConfigService) => {
-          return {
-            transport: Transport.NATS,
-            options: {
-              servers: configService.get('NATS_URL') as string,
-              queue: 'posts_service',
-            },
-          };
-        },
-        imports: [ConfigModule],
-        inject: [ConfigService],
-      },
-    ]),
-    InboxModule,
   ],
   providers: [
     CommentsService,

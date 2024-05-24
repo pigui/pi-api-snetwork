@@ -10,7 +10,7 @@ import { PostsModule } from './posts/application/posts.module';
 @Module({
   imports: [
     CqrsModule.forRoot(),
-    ConfigModule.forRoot({ load: [configurations] }),
+    ConfigModule.forRoot({ load: [configurations], isGlobal: true }),
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
         const uri = `${configService.get('DATABASE_URL')}:${configService.get(

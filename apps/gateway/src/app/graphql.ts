@@ -70,10 +70,10 @@ export interface IMutation {
 
 export interface IQuery {
     activeUser(): User | Promise<User>;
-    find(): Nullable<Nullable<Comment>[]> | Promise<Nullable<Nullable<Comment>[]>>;
+    findComments(): Nullable<Nullable<Comment>[]> | Promise<Nullable<Nullable<Comment>[]>>;
     findCommentById(findCommentByIdInput: FindCommentByIdInput): Nullable<Comment> | Promise<Nullable<Comment>>;
     findCommentByPostId(findCommentByPostIdInput?: Nullable<FindCommentByPostIdInput>): Nullable<Comment[]> | Promise<Nullable<Comment[]>>;
-    findMeCommnets(): Nullable<Comment[]> | Promise<Nullable<Comment[]>>;
+    findMeComments(): Nullable<Comment[]> | Promise<Nullable<Comment[]>>;
     findPosts(): Nullable<Post[]> | Promise<Nullable<Post[]>>;
     findPostById(findPostByIdInput: FindPostByIdInput): Nullable<Post> | Promise<Nullable<Post>>;
     findMePosts(): Nullable<Post[]> | Promise<Nullable<Post[]>>;
@@ -90,6 +90,12 @@ export interface Comment {
     updated: Date;
 }
 
+export interface ISubscription {
+    commentCreated(): Comment | Promise<Comment>;
+    postCreated(): Post | Promise<Post>;
+    userCreated(): User | Promise<User>;
+}
+
 export interface Post {
     id: string;
     title: string;
@@ -97,11 +103,6 @@ export interface Post {
     user: User;
     createdAt: Date;
     updatedAt: Date;
-}
-
-export interface ISubscription {
-    postCreated(): Post | Promise<Post>;
-    userCreated(): User | Promise<User>;
 }
 
 export interface User {

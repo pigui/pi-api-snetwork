@@ -3,6 +3,8 @@ import { EventBus, QueryBus } from '@nestjs/cqrs';
 import { RegisterInboxEvent } from './events/register-inbox.event';
 import { Inbox } from './entities/inbox';
 import { ProcessInboxMessageQuery } from './queries/process-inbox-message.query';
+import { ProcessInboxEvent } from './events/process-inbox.event';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class InboxService {
@@ -23,5 +25,8 @@ export class InboxService {
 
   find(): Promise<Array<Inbox>> {
     return this.queryBus.execute(new ProcessInboxMessageQuery());
+  }
+  proccess(client: ClientProxy, inbox: Inbox): Promise<void> {
+    return this.eventBus.publish(new ProcessInboxEvent(client, inbox));
   }
 }
