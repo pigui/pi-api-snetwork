@@ -1,7 +1,8 @@
+import { UserRole } from '@app/shared/entities';
+import { DateService } from '@app/shared/util/date';
 import { GenerateIdService } from '@app/shared/util/generate-id';
 import { Injectable, Logger } from '@nestjs/common';
 import { User } from '../entities/user';
-import { DateService } from '@app/shared/util/date';
 
 @Injectable()
 export class UserFactory {
@@ -14,7 +15,15 @@ export class UserFactory {
   create(email: string, firstName: string, lastName: string): User {
     const userId = this.generateIdService.generate();
     const now = this.dateService.now();
-    const user = new User(userId, email, firstName, lastName, now, now);
+    const user = new User(
+      userId,
+      email,
+      firstName,
+      lastName,
+      new UserRole('user'),
+      now,
+      now
+    );
     this.logger.log('create', user);
     return user;
   }

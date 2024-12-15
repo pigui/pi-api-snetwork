@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs';
-import { User } from '../entities/user';
 import { FilterQuery } from 'mongoose';
+import { Observable } from 'rxjs';
 import { UserEntity } from '../../infraestructure/mongo/entities/user.entity';
+import { User } from '../entities/user';
 
 export abstract class UserRepository {
   abstract create(user: User): Observable<User | null>;
@@ -11,4 +11,6 @@ export abstract class UserRepository {
   abstract findByEmail(email: string): Observable<User | null>;
   abstract getPassword(user: User): Observable<string | null>;
   abstract comparePassword(user: User, password: string): Observable<boolean>;
+  abstract delete(user: User): Observable<User | null>;
+  abstract softdelete(user: User): Observable<User | null>;
 }

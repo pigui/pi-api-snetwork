@@ -1,12 +1,12 @@
-import { Controller } from '@nestjs/common';
-import { UsersService } from '../application/users.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserMessages } from '@app/shared/common/messages';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { User } from '../application/entities/user';
+import { UsersService } from '../application/users.service';
+import { ComparePasswordDto } from './dto/compare-password.dto';
 import { CreateUserWithPasswordDto } from './dto/create-user-with-password.dto';
 import { FindUserByEmailDto } from './dto/find-by-email.dto';
 import { FindUserByIdDto } from './dto/find-by-id.dto';
-import { User } from '../application/entities/user';
-import { ComparePasswordDto } from './dto/compare-password.dto';
 
 @Controller()
 export class UsersController {
@@ -45,5 +45,15 @@ export class UsersController {
   @MessagePattern(UserMessages.COMPARE_PASSWORD)
   comparePassword(@Payload() { user, password }: ComparePasswordDto) {
     return this.usersService.comparePassword(user, password);
+  }
+
+  @MessagePattern(UserMessages.DELETE_USER)
+  delete(@Payload() user: User) {
+    return this.usersService.delete(user);
+  }
+
+  @MessagePattern(UserMessages.SOFTDELETE_USER)
+  softdelete(@Payload() user: User) {
+    return this.usersService.softdelete(user);
   }
 }

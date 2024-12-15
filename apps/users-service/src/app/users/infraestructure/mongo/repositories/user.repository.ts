@@ -1,12 +1,12 @@
+import { HashingService } from '@app/shared/util/hashing';
 import { Injectable, Logger } from '@nestjs/common';
-import { UserRepository } from '../../../application/repositories/user.repository';
-import { Observable, from, iif, map, of, switchMap, toArray } from 'rxjs';
-import { User } from '../../../application/entities/user';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Types } from 'mongoose';
-import { HashingService } from '@app/shared/util/hashing';
-import { UserMapper } from '../mappers/user.mapper';
+import { Observable, from, iif, map, of, switchMap, toArray } from 'rxjs';
+import { User } from '../../../application/entities/user';
+import { UserRepository } from '../../../application/repositories/user.repository';
 import { UserEntity } from '../entities/user.entity';
+import { UserMapper } from '../mappers/user.mapper';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -16,6 +16,7 @@ export class UserRepositoryImpl implements UserRepository {
     private readonly hashingService: HashingService,
     private readonly userMapper: UserMapper
   ) {}
+
   create(user: User): Observable<User> {
     this.logger.log('create', user);
     const entity = this.userMapper.toPersistence(user);
@@ -51,7 +52,9 @@ export class UserRepositoryImpl implements UserRepository {
 
   find(filterQuery: FilterQuery<UserEntity>): Observable<Array<User>> {
     this.logger.log('find');
-    const entities = this.userModel.find(filterQuery).lean<Array<UserEntity>>();
+    const entities = this.userModel
+      .find({ ...filterQuery, deletedAt: { $ne: null } })
+      .lean<Array<UserEntity>>();
     return from(entities).pipe(
       switchMap((users: Array<UserEntity>) => {
         return from(users).pipe(
@@ -115,5 +118,21 @@ export class UserRepositoryImpl implements UserRepository {
         );
       })
     );
+  }
+
+  delete(user: User): Observable<User> {
+    this.logger.log('delete', user);
+    return from(
+      this.userModel.findByIdAndDelete(new Types.ObjectId(user.id))
+    ).pipe(map(() => user));
+  }
+
+  softdelete(user: User): Observable<User | null> {
+    this.logger.log('softDelete', user);
+    return from(
+      this.userModel.findByIdAndUpdate(new Types.ObjectId(user.id), {
+        $set: { deletedAt: new Date() },
+      })
+    ).pipe(map(() => user));
   }
 }

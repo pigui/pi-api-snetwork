@@ -29,6 +29,12 @@ export class UserEntity {
 
   @Prop()
   googleId?: string;
+
+  @Prop({ default: false })
+  isAdmin: boolean;
+
+  @Prop()
+  deletedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserEntity);

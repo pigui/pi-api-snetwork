@@ -5,4 +5,6 @@ export class UserMessages {
   static FIND_BY_ID = 'find_user_by_id';
   static GET_PASSWORD = 'get_user_password';
   static COMPARE_PASSWORD = 'compare_password';
+  static DELETE_USER = 'delete_user';
+  static SOFTDELETE_USER = 'softdelete_user';
 }

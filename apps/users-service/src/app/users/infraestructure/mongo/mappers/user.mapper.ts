@@ -1,7 +1,8 @@
+import { UserRole } from '@app/shared/entities';
 import { Injectable, Logger } from '@nestjs/common';
+import { ObjectId } from 'mongodb';
 import { User } from '../../../application/entities/user';
 import { UserEntity } from '../entities/user.entity';
-import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class UserMapper {
@@ -13,6 +14,7 @@ export class UserMapper {
       entity.email,
       entity.firstName,
       entity.lastName,
+      new UserRole(entity.isAdmin ? 'admin' : 'user'),
       entity.createdAt,
       entity.updatedAt
     );
@@ -25,6 +27,7 @@ export class UserMapper {
     entity.email = domain.email;
     entity.firstName = domain.firstName;
     entity.lastName = domain.firstName;
+    entity.isAdmin = domain.role.equals(new UserRole('admin'));
     entity.createdAt = domain.createdAt;
     entity.updatedAt = domain.updatedAt;
 

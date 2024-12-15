@@ -24,6 +24,10 @@ input FindUserByIdInput {
   id: ID!
 }
 
+input DeleteUserInput {
+  user: User!
+}
+
 type Query {
   findUsers: [User!]
   findUserByEmail(findUserByEmailInput: FindUserByEmailInput!): User
@@ -32,8 +36,11 @@ type Query {
 
 type Mutation {
   createUser(createUserWithPasswordInput: CreateUserWithPasswordInput!): User!
+  deleteUser(deleteUserInput: DeleteUserInput!): User!
+  softdelete(deleteUserInput: DeleteUserInput!): User!
 }
 
 type Subscription {
   userCreated: User!
+  userDeleted: User!
 }
